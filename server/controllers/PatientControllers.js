@@ -60,7 +60,7 @@ export const getPatient =  async(req,res)=>{
             status:'fail',
             message:err
         })
-    }np
+    }
 }
 
 export const detetePatient = async (req,res)=>{
@@ -87,7 +87,8 @@ export const updatePatient = async (req,res)=>{
     try{
 
    const data = await patientInfos.findByIdAndUpdate(req.params.id,req.body,{
-    new:true
+    new:true,
+    runValidators:true
    });
         res.status(200).json({
          status:'success',
