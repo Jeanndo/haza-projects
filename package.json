@@ -4,16 +4,14 @@
   "description": "Managment of patients",
   "main": "index.js",
   "scripts": {
-
     "start": " babel-node ./server/server.js",
     "dev-start": " nodemon --exec babel-node ./server/server.js",
-    "prod-start": "SET NODE_ENV=production & nodemon --exec babel-node ./server/server.js"
-    
+    "prod-start": "SET NODE_ENV=production & nodemon --exec babel-node ./server/server.js",
+    "debug":"ndb --exec babel-node ./server/server.js "
   },
   "repository": {
     "type": "git",
     "url": "git+ https://github.com/Jeanndo/haza-projects.git"
-   
   },
   "dependencies": {
     "@babel/cli": "^7.8.3",
@@ -38,10 +36,9 @@
   },
   "author": "Jeanndo",
   "license": "ISC",
-"engines": {
-  "node": ">=14.15.3"
-},
-
+  "engines": {
+    "node": ">=14.15.3"
+  },
   "bugs": {
     "url": "https://github.com/Jeanndo/haza-projects/issues"
   },
