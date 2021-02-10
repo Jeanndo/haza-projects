@@ -1,13 +1,15 @@
 import dotenv from "dotenv";
-import app from "./index";
 import mongoose from "mongoose";
 
-dotenv.config({ path: "./server/config.env" });
+dotenv.config({ path: './config.env' });
+import app from "./index";
 
 
-const port = process.env.PORT;
+
+
 
 const DB = process.env.DATABASE;
+
 mongoose.connect(DB,{
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -15,6 +17,8 @@ mongoose.connect(DB,{
     useFindAndModify: false,
   }).then(()=> console.log(" Db connection done successfully"));
 
+
+const port = process.env.PORT||8000;
 const server = app.listen(port, () =>
   process.stdout.write(`Listening on port ${port} ...\n******************** \n`)
-);
+); 

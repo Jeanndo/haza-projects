@@ -4,13 +4,14 @@
   "description": "Managment of patients",
   "main": "index.js",
   "scripts": {
+    "start": " babel-node ./server/server.js",
     "dev-start": " nodemon --exec babel-node ./server/server.js",
     "prod-start": "SET NODE_ENV=production & nodemon --exec babel-node ./server/server.js",
-    "start": " babel-node ./server/server.js"
+    "debug":"ndb --exec babel-node ./server/server.js "
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yamuben/PatientRegistration.git"
+    "url": "git+ https://github.com/Jeanndo/haza-projects.git"
   },
   "dependencies": {
     "@babel/cli": "^7.8.3",
@@ -23,6 +24,7 @@
     "babel-node": "0.0.1-security",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "env": "0.0.2",
@@ -32,10 +34,13 @@
     "nodemon": "^2.0.7",
     "validator": "^13.5.2"
   },
-  "author": "Yamu",
+  "author": "Jeanndo",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/yamuben/PatientRegistration/issues"
+  "engines": {
+    "node": ">=14.15.3"
   },
-  "homepage": "https://github.com/yamuben/PatientRegistration#readme"
+  "bugs": {
+    "url": "https://github.com/Jeanndo/haza-projects/issues"
+  },
+  "homepage": "https://github.com/Jeanndo/haza-projects#readme"
 }

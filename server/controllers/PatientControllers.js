@@ -1,106 +1,81 @@
 import patientInfos from "../models/Patient";
+import catchAsync from '../utils/catchAsync';
+import AppError from '../utils/appError';
 
-export const createPatient = async (req,res)=>{
-try{
-    
+export const createPatient = catchAsync(async (req,res,next)=>{
+
     const newPatient = await patientInfos.create(req.body);
 
-   console.log(req.body);
-   
-
-    res.status(201).json({
-        status:"success",
-        newPatient
-    })
-
-}catch(err){
-
-res.status(400).json({
-    status:"fail",
-    message:err
+    console.log(req.body);
+    
+ 
+     res.status(201).json({
+         status:"success",
+         newPatient
+     })
 })
-}
-}
 
 
- export const getAllPatients = async (req,res)=>{
+ export const getAllPatients =  catchAsync(async (req,res,next)=>{
 
 const allPatients = await patientInfos.find();
 
-try{
 res.status(200).json({
     status:'success',
     data:{
         allPatients 
     }
 })
-}catch(err){
-res.status(404).json({
-    status:'fail',
-    message:err
+
 })
-}
 
-}
-
-export const getPatient =  async(req,res)=>{
-    try{
+export const getPatient =   catchAsync(async(req,res,next)=>{
     
     const patient = await patientInfos.findById( req.params.id);
+
+    if(!patient){
+    return next(new AppError('No Patient Found With That ID ',404))
+    }
 
     res.status(200).json({
         status:'success',
         data:{
         data:patient
         }
-    })
+    })  
+})
 
-    }catch(err){
-        res.status(404).json({
-            status:'fail',
-            message:err
-        })
-    }np
-}
-
-export const detetePatient = async (req,res)=>{
+export const detetePatient =  catchAsync(async (req,res,next)=>{
  
-    try{
-    await patientInfos.findByIdAndRemove(req.params.id);
+    const patient= await patientInfos.findByIdAndRemove(req.params.id);
+    
+    
+    if(!patient){
+        return next(new AppError('Could not Delete Patient With That ID ',404))
+        }
     
     res.status(204).json({
         status:'success',
         data:{
             message:null
         }
-    })
-    }catch(err){
+    })   
+})
 
-        res.status(404).json({
-            status:'fail',
-            message:err
-        })
-    }
-}
+export const updatePatient =  catchAsync(async (req,res,next)=>{
 
-export const updatePatient = async (req,res)=>{
-    try{
-
-   const data = await patientInfos.findByIdAndUpdate(req.params.id,req.body,{
-    new:true
+   const patient = await patientInfos.findByIdAndUpdate(req.params.id,req.body,{
+    new:true,
+    runValidators:true
    });
+
+   if(!patient){
+    return next(new AppError('Could not Update Patient With That ID ',404))
+    }
         res.status(200).json({
          status:'success',
          data:{
-            data
+            patient
          }
-        })
-
-    }catch(err){
-
-        res.status(404).json({
-            status:'fail',
-            message:err
-        })
-    }  
-}
+        })  
+})

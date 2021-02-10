@@ -7,6 +7,7 @@ const patientSchema = new mongoose.Schema({
         required: [true, " patient name is required"]
     },
     phone:{
+       
         type: String,
         default:"0123456"
     },
@@ -16,7 +17,9 @@ const patientSchema = new mongoose.Schema({
     },
     email:{
         type:String,
-        validate:[validator.isEmail,"please provide a valid email"]
+        validate:[validator.isEmail,"please provide a valid email"],
+        unique:[true,'email should unique']
+       
     }
 });
 

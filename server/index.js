@@ -1,11 +1,24 @@
 import express from "express";
 import bodyParser from "body-parser";
+import compression from "compression"
 import patientRouter from "./routes/PatientRoute";
+import AppError from './utils/appError';
+import dotenv from 'dotenv'
+import * as globalErrorHandler from './controllers/errorController'
 const app = express();
+
+dotenv.config({ path: './config.env' });
+//console.log(process.env.NODE_ENV)
+if(process.env.NODE_ENV === 'development'){
+    console.log(process.env)
+}
+
+
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
+app.use(compression())
 
 app.get('/', (req,res)=>{res.status(200).send({
     status:200,
@@ -14,5 +27,18 @@ app.get('/', (req,res)=>{res.status(200).send({
 
 app.use("/api/v1/patient",patientRouter)
 
+app.all('*',(req,res,next)=>{
 
+//   res.status(404).json({
+//      status:'fail',
+//      message:`can't find ${req.originalUrl} on this server` 
+//   })  
+// const err = new Error (`can't find ${req.originalUrl} on this server` )
+// err.status = 'fail';
+// err.statusCode = 404;
+
+next(new AppError(`can't find ${req.originalUrl} on this server`,404)) 
+})
+ 
+app.use(globalErrorHandler.errorHandler);
 export default app;
